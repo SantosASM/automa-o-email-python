@@ -1,0 +1,35 @@
+import win32com.client as win32
+import os 
+# Integração com o Outlook
+
+outlook = win32.Dispatch('outlook.application')
+
+# Criar um email novo
+email = outlook.CreateItem(0)
+
+image_path = ('C:/Users/Santos/Pictures/1249111.jpg')
+
+# Configurar as informações do email
+email.To = 'andrey-santos@hotmail.com; jp.ctb@live.com'
+email.Subject = 'Teste Automação email com Python'
+email.HTMLBody = '''
+
+<p style= 'color:red; background-color:white'>Teste de envio de email com Python</p>
+<p style= 'color:red; background-color:white'>Confira essa clássica receita de bolo de cenoura simples e fácil,
+ nossa campeã de acessos! O bolo de cenoura é um doce muito popular em nosso país,
+   especialmente no café da manhã e no lanche da tarde. Com sua cobertura de chocolate irresistível e 
+   seu interior macio e úmido, ela é uma receita que conquista o coração de todos! 
+   Veja com a gente como fazer bolo de cenoura, uma receita prática,
+     preparada com auxílio do liquidificador e perfeita para degustar com um cafezinho!
+
+.</p>
+'''
+
+# Adicionar imagem como anexo, mas com referência no corpo do e-mail
+attachment = email.Attachments.Add(image_path)
+attachment.PropertyAccessor.SetProperty("http://schemas.microsoft.com/mapi/proptag/0x3712001F", "imagem_id")
+
+# Enviar o email
+email.Send()
+
+print('Email enviado')
